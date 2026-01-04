@@ -287,8 +287,8 @@ strong {
 
 .intro-avatar {
   flex-shrink: 0;
-  width: 130px;
-  height: 130px;
+  width: 160px;
+  height: 160px;
   border-radius: 50%;
   overflow: hidden;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
@@ -781,8 +781,8 @@ strong {
   }
 
   .intro-avatar {
-    width: 100px;
-    height: 100px;
+    width: 130px;
+    height: 130px;
     margin-bottom: var(--space-md);
   }
 
