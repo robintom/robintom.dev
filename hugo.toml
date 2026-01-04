@@ -1,0 +1,102 @@
+# =============================================================================
+# Hugo Configuration
+# =============================================================================
+# This is the main configuration file for your Hugo site.
+# Docs: https://gohugo.io/getting-started/configuration/
+
+baseURL = 'https://robintom.dev/'
+languageCode = 'en-us'
+title = 'Robin Tom'
+
+# Theme is built into /layouts, no external theme needed
+
+# =============================================================================
+# Site Parameters
+# =============================================================================
+# Custom parameters accessible via {{ .Site.Params.xxx }} in templates
+
+[params]
+  description = "Developer blog - thoughts on code, tech, and building things"
+  author = "Robin Tom"
+
+  # Social links (used in footer)
+  github = "https://github.com/robintom"
+  twitter = ""
+  linkedin = ""
+  email = ""
+
+# =============================================================================
+# Permalinks
+# =============================================================================
+# Control URL structure for content
+
+[permalinks]
+  posts = '/posts/:slug/'
+
+# =============================================================================
+# Taxonomies
+# =============================================================================
+# How content is categorized
+
+[taxonomies]
+  tag = 'tags'
+
+# =============================================================================
+# Markup Settings
+# =============================================================================
+# Configure markdown rendering and syntax highlighting
+
+[markup]
+  # Table of contents settings
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 4
+
+  # Goldmark is Hugo's default markdown parser
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true  # Allow raw HTML in markdown if needed
+
+  # Syntax highlighting for code blocks
+  [markup.highlight]
+    anchorLineNos = false
+    codeFences = true
+    guessSyntax = true
+    hl_Lines = ''
+    hl_inline = false
+    lineAnchors = ''
+    lineNoStart = 1
+    lineNos = false
+    lineNumbersInTable = true
+    noClasses = true
+    noHl = false
+    style = 'dracula'
+    tabWidth = 4
+
+# =============================================================================
+# Output Formats
+# =============================================================================
+# Define what formats Hugo should output
+
+[outputs]
+  home = ['HTML', 'RSS']
+  section = ['HTML', 'RSS']
+  taxonomy = ['HTML']
+  term = ['HTML']
+
+# =============================================================================
+# Build Settings
+# =============================================================================
+
+[build]
+  writeStats = false
+
+# Minification settings (used with hugo --minify)
+[minify]
+  [minify.tdewolff]
+    [minify.tdewolff.html]
+      keepWhitespace = false
+    [minify.tdewolff.css]
+      precision = 0
+    [minify.tdewolff.js]
+      precision = 0

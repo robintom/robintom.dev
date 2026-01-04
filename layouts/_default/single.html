@@ -1,0 +1,18 @@
+{{ define "main" }}
+<a href="{{ .Parent.Permalink }}" class="back-link">Back</a>
+
+<article>
+  <header class="page-header">
+    <h1 class="page-title">{{ .Title }}</h1>
+    <div class="page-meta">
+      <time datetime="{{ .Date.Format "2006-01-02" }}">
+        {{ .Date.Format "January 2, 2006" }}
+      </time>
+    </div>
+  </header>
+
+  <div class="content">
+    {{ .Content }}
+  </div>
+</article>
+{{ end }}

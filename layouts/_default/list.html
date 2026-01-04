@@ -1,0 +1,35 @@
+{{ define "main" }}
+<header class="page-header">
+  <h1 class="page-title">{{ .Title }}</h1>
+  {{ with .Description }}
+    <p class="page-description">{{ . }}</p>
+  {{ end }}
+</header>
+
+<div class="content">
+  {{ .Content }}
+
+  {{ if .Pages }}
+    <ul class="item-list">
+      {{ range .Pages }}
+        <li class="item">
+          <a href="{{ .Permalink }}" class="item-link">
+            <time class="item-date" datetime="{{ .Date.Format "2006-01-02" }}">
+              {{ .Date.Format "Jan 2" }}
+            </time>
+            <div class="item-content">
+              <h3 class="item-title">{{ .Title }}</h3>
+              {{ with .Description }}
+                <p class="item-description">{{ . }}</p>
+              {{ end }}
+            </div>
+            {{ if eq .Section "posts" }}
+              <span class="item-meta">{{ math.Round (div (countwords .Content) 200.0) }} min</span>
+            {{ end }}
+          </a>
+        </li>
+      {{ end }}
+    </ul>
+  {{ end }}
+</div>
+{{ end }}

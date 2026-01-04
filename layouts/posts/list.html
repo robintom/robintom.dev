@@ -1,0 +1,77 @@
+{{ define "main" }}
+<header class="page-header">
+  <h1 class="page-title">Posts</h1>
+  <p class="page-description">All my writings, newest first.</p>
+</header>
+
+{{/* Collect all unique tags */}}
+{{ $posts := .Pages }}
+{{ $allTags := slice }}
+{{ range $posts }}
+  {{ range .Params.tags }}
+    {{ if not (in $allTags .) }}
+      {{ $allTags = $allTags | append . }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+
+{{/* Tag filter section */}}
+{{ if $allTags }}
+<div class="tag-filter">
+  <span class="tag-filter-label">Filter by tag:</span>
+  <div class="tag-filter-list">
+    <button class="tag-filter-btn active" data-tag="all">All</button>
+    {{ range sort $allTags }}
+      <button class="tag-filter-btn" data-tag="{{ . | urlize }}">{{ . }}</button>
+    {{ end }}
+  </div>
+</div>
+{{ end }}
+
+<div class="filtered-content">
+  {{/* Group posts by year */}}
+  {{ $years := slice }}
+  {{ range $posts }}
+    {{ $year := .Date.Format "2006" }}
+    {{ if not (in $years $year) }}
+      {{ $years = $years | append $year }}
+    {{ end }}
+  {{ end }}
+
+  {{ range $year := $years }}
+    <section class="posts-year" data-year="{{ $year }}">
+      <h2 class="year-heading">{{ $year }}</h2>
+      <ul class="item-list">
+        {{ range $posts }}
+          {{ if eq (.Date.Format "2006") $year }}
+            {{ $tags := slice }}
+            {{ range .Params.tags }}
+              {{ $tags = $tags | append (. | urlize) }}
+            {{ end }}
+            <li class="item" data-tags="{{ delimit $tags "," }}">
+              <a href="{{ .Permalink }}" class="item-link">
+                <time class="item-date" datetime="{{ .Date.Format "2006-01-02" }}">
+                  {{ .Date.Format "Jan 2" }}
+                </time>
+                <div class="item-content">
+                  <h3 class="item-title">{{ .Title }}</h3>
+                  {{ with .Description }}
+                    <p class="item-description">{{ . }}</p>
+                  {{ end }}
+                </div>
+                <span class="item-meta">{{ math.Round (div (countwords .Content) 200.0) }} min</span>
+              </a>
+            </li>
+          {{ end }}
+        {{ end }}
+      </ul>
+    </section>
+  {{ end }}
+
+  {{ if not $posts }}
+    <p>No posts yet. Check back soon!</p>
+  {{ end }}
+
+  <p class="no-results" hidden>No posts found with this tag.</p>
+</div>
+{{ end }}

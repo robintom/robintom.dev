@@ -1,0 +1,61 @@
+{{ define "main" }}
+<header class="page-header">
+  <h1 class="page-title">Today I Learned</h1>
+  <p class="page-description">Small code snippets and interesting things I discover.</p>
+</header>
+
+{{ $tils := .Pages }}
+
+{{/* Collect all unique tags */}}
+{{ $allTags := slice }}
+{{ range $tils }}
+  {{ range .Params.tags }}
+    {{ if not (in $allTags .) }}
+      {{ $allTags = $allTags | append . }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+
+{{/* Tag filter section */}}
+{{ if $allTags }}
+<div class="tag-filter">
+  <span class="tag-filter-label">Filter by tag:</span>
+  <div class="tag-filter-list">
+    <button class="tag-filter-btn active" data-tag="all">All</button>
+    {{ range sort $allTags }}
+      <button class="tag-filter-btn" data-tag="{{ . | urlize }}">{{ . }}</button>
+    {{ end }}
+  </div>
+</div>
+{{ end }}
+
+<div class="filtered-content">
+  {{ if $tils }}
+    <ul class="item-list">
+      {{ range $tils }}
+        {{ $tags := slice }}
+        {{ range .Params.tags }}
+          {{ $tags = $tags | append (. | urlize) }}
+        {{ end }}
+        <li class="item" data-tags="{{ delimit $tags "," }}">
+          <a href="{{ .Permalink }}" class="item-link">
+            <time class="item-date" datetime="{{ .Date.Format "2006-01-02" }}">
+              {{ .Date.Format "Jan 2" }}
+            </time>
+            <div class="item-content">
+              <h3 class="item-title">{{ .Title }}</h3>
+              {{ with .Description }}
+                <p class="item-description">{{ . }}</p>
+              {{ end }}
+            </div>
+          </a>
+        </li>
+      {{ end }}
+    </ul>
+  {{ else }}
+    <p class="no-posts">No TILs yet. Check back soon!</p>
+  {{ end }}
+
+  <p class="no-results" hidden>No TILs found with this tag.</p>
+</div>
+{{ end }}
