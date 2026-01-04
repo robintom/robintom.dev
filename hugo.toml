@@ -18,6 +18,7 @@ title = 'Robin Tom'
 [params]
   description = "Developer blog - thoughts on code, tech, and building things"
   author = "Robin Tom"
+  avatar = "/images/profile.jpg"
 
   # Social links (used in footer)
   github = "https://github.com/robintom"
