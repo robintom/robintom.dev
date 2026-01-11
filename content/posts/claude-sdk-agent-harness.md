@@ -24,7 +24,7 @@ To properly evaluate the harness, I needed a project complex enough to stress-te
 
 What is an Agent Harness? Simply put, Agent harness is a `model wrapper` that is batteries included, like the capability to execute code / command, search for files, search the web, tool calls etc. Each major frontier company has its own opinionated views and its own Agent harnesses (OpenAI SDK, Claude Agents SDK etc)
 
-![Agent Harness Architecture](agent-harness-arch.png)
+![Agent Harness Architecture](/images/agent-harness-arch.png)
 
 I will be covering each of these components of the harness.
 
@@ -70,7 +70,7 @@ docs_server = create_sdk_mcp_server(name="docs", tools=[search_docs])
 - Tool descriptions are prompts. Claude decides when to use a tool based on its description. Vague description = tool never called.
 - Tools are automatically namespaced as mcp__servername__toolname internally.
 - Return format matters. The {"content": [{"type": "text", "text": "..."}]} structure is required.
-- LLM used matters for inference, Reasoning / Thinking models like Claude Sonnet (4.5) or Claude Opus (4.5) handled complex tools and ambiguous queries better; they handle multiple tools better and seek clarification when needed.
+- LLM model used matters, Reasoning / Thinking models like Claude Sonnet (4.5) or Claude Opus (4.5) handled complex tools and ambiguous queries better; they handle multiple tools better and seek clarification when needed.
 
 ### When to Use What
 
