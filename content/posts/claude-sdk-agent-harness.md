@@ -1,6 +1,6 @@
 ---
 title: "I Built 'Source Wars' Agent to Understand Claude's Agent Harness"
-date: 2026-01-04
+date: 2026-01-11
 description: "I built a multi-agent research system to understand what powers Claude Code - The Claude Agent SDK and why does it feel different than other coding agents"
 tags: ["Claude", "Agent SDK", "Agent Architecture", "Claude Code", "Multi-Agent Systems", "LLM Engineering", "Developer Tools", "Technical Deep Dive"]
 draft: false
