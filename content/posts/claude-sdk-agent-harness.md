@@ -22,7 +22,7 @@ To properly evaluate the harness, I needed a project complex enough to stress-te
 
 ## Agent Harness
 
-What is an Agent Harness? Simply put, Agent harness is a `model wrapper` that is batteries included, like the capability to execute code / command, search for files, search the web, tool calls etc. Each major frontier companies has their own opinionated views and have their own Agent harnesses (OpenAI SDK, Claude Agents SDK etc)
+What is an Agent Harness? Simply put, Agent harness is a `model wrapper` that is batteries included, like the capability to execute code / command, search for files, search the web, tool calls etc. Each major frontier company has its own opinionated views and its own Agent harnesses (OpenAI SDK, Claude Agents SDK etc)
 
 ![Agent Harness Architecture](agent-harness-arch.png)
 
@@ -160,7 +160,7 @@ You are a meticulous researcher...
 ```
 
 ### What I Learned
-- The `description` field plays a huge role in the routing decisioning. Claude reads all subagent descriptions and decides which to invoke based on the task.
+- The `description` field plays a huge role in the routing decision. Claude reads all subagent descriptions and decides which to invoke based on the task.
     ```python
     # Bad: Claude might not know when to use this
     "description": "A research agent"
@@ -169,7 +169,7 @@ You are a meticulous researcher...
     "description": "Deep researcher for technical topics. Use when the question requires reading documentation, source code, or multiple authoritative sources. NOT for quick factual lookups."
     ```
 - Parallel execution is implicit. If the orchestrator decides to invoke multiple subagents for different aspects of a task, they run concurrently. I didn't have to code this—it emerged from the task structure.
-- Explicit sub agent execution can be achieved by nudging it in the prompt. eg. `"Use the deep-researched agent for researching complex topics"`
+- Explicit sub agent execution can be achieved by nudging it in the prompt. eg. `"Use the deep-researcher agent for researching complex topics"`
 - Model selection per subagent based on your use-case or strategy. I used Opus for synthesis (needs reasoning) and Sonnet for scanning (needs speed). The cost difference is significant.
 
 ## Hooks
@@ -179,7 +179,7 @@ Hooks intercept tool execution at two main points:
 - PreToolUse: Before a tool runs (can allow, deny, or ask for approval)
 - PostToolUse: After a tool runs (for logging, auditing, transformation)
 
-People coming from Java / Spring boot the best mental model to think of this is using filters like `WebFilter`
+For people coming from Java / Spring Boot, the best mental model to think of this is using filters like `WebFilter`
 
 Hooks don't steer Claude's reasoning. I initially thought I could use hooks to guide Claude toward certain tools or strategies. That's not what they do. They intercept execution, not planning.
 If you want to change what Claude decides to do, modify the system prompt. Hooks only control what actually happens when Claude tries to act.
@@ -333,7 +333,7 @@ async def main():
 ### What I Learned
 - The `description` field is routing logic. Just like subagents, Claude decides when to use a skill based on its description. Write descriptions with trigger keywords.
 - Scripts are output-only. When a skill includes a Python script, Claude runs it and gets the output, but the script code never enters context. This is token-efficient for utilities like formatters.
-- When defining the sub-agents programmatically there is no way to define which agents has access to which skills, while in markdown based subagents you can easily define it.
+- When defining the sub-agents programmatically there is no way to define which agents have access to which skills, while in markdown based subagents you can easily define it.
 
 ## The Harness in Action : Source Wars (Multi Agent Research System)
 
