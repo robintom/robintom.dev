@@ -1,5 +1,5 @@
 ---
-title: "Git stash with --patch for selective stashing"
+title: "Git stash with `--patch` for selective stashing"
 date: 2026-01-04
 description: "Stash only specific changes interactively"
 tags: ["git"]

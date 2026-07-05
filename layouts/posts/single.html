@@ -1,28 +1,30 @@
 {{ define "main" }}
-<a href="/posts/" class="back-link">Back to posts</a>
+<div class="page-single">
+  <a href="/posts/" class="back-link">All posts</a>
 
-<article>
-  <header class="page-header">
-    <h1 class="page-title">{{ .Title }}</h1>
-    <div class="page-meta">
-      <time datetime="{{ .Date.Format "2006-01-02" }}">
-        {{ .Date.Format "January 2, 2006" }}
-      </time>
-      <span>&middot;</span>
-      <span>{{ math.Round (div (countwords .Content) 200.0) }} min read</span>
+  <article>
+    <header class="post-header">
+      <h1 class="post-title">{{ .Title }}</h1>
+      <div class="page-meta">
+        <time datetime="{{ .Date.Format "2006-01-02" }}">
+          {{ .Date.Format "Jan 2, 2006" }}
+        </time>
+        <span>&middot;</span>
+        <span>{{ math.Round (div (countwords .Content) 200.0) }} min read</span>
 
-      {{ with .Params.tags }}
-        <div class="tags">
-          {{ range . }}
-            <a href="/tags/{{ . | urlize }}/" class="tag">{{ . }}</a>
-          {{ end }}
-        </div>
-      {{ end }}
+        {{ with .Params.tags }}
+          <div class="tags">
+            {{ range . }}
+              <a href="/tags/{{ . | urlize }}/" class="tag">{{ . }}</a>
+            {{ end }}
+          </div>
+        {{ end }}
+      </div>
+    </header>
+
+    <div class="content">
+      {{ .Content }}
     </div>
-  </header>
-
-  <div class="content">
-    {{ .Content }}
-  </div>
-</article>
+  </article>
+</div>
 {{ end }}

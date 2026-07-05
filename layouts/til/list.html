@@ -1,7 +1,7 @@
 {{ define "main" }}
 <header class="page-header">
   <h1 class="page-title">Today I Learned</h1>
-  <p class="page-description">Small code snippets and interesting things I discover.</p>
+  <p class="page-description">Short notes on small things &mdash; commands, flags, and tricks worth remembering.</p>
 </header>
 
 {{ $tils := .Pages }}
@@ -31,27 +31,43 @@
 
 <div class="filtered-content">
   {{ if $tils }}
-    <ul class="item-list">
-      {{ range $tils }}
-        {{ $tags := slice }}
-        {{ range .Params.tags }}
-          {{ $tags = $tags | append (. | urlize) }}
-        {{ end }}
-        <li class="item" data-tags="{{ delimit $tags "," }}">
-          <a href="{{ .Permalink }}" class="item-link">
-            <time class="item-date" datetime="{{ .Date.Format "2006-01-02" }}">
-              {{ .Date.Format "Jan 2" }}
-            </time>
-            <div class="item-content">
-              <h3 class="item-title">{{ .Title }}</h3>
-              {{ with .Description }}
-                <p class="item-description">{{ . }}</p>
-              {{ end }}
-            </div>
-          </a>
-        </li>
+    {{/* Group TILs by year */}}
+    {{ $years := slice }}
+    {{ range $tils }}
+      {{ $year := .Date.Format "2006" }}
+      {{ if not (in $years $year) }}
+        {{ $years = $years | append $year }}
       {{ end }}
-    </ul>
+    {{ end }}
+
+    {{ range $year := $years }}
+      <section class="posts-year" data-year="{{ $year }}">
+        <h2 class="year-heading">{{ $year }}</h2>
+        <ul class="item-list">
+          {{ range $tils }}
+            {{ if eq (.Date.Format "2006") $year }}
+              {{ $tags := slice }}
+              {{ range .Params.tags }}
+                {{ $tags = $tags | append (. | urlize) }}
+              {{ end }}
+              <li class="item" data-tags="{{ delimit $tags "," }}">
+                <a href="{{ .Permalink }}" class="item-link">
+                  <time class="item-date" datetime="{{ .Date.Format "2006-01-02" }}">
+                    {{ .Date.Format "Jan 2" }}
+                  </time>
+                  <div class="item-content">
+                    <h3 class="item-title">{{ .Title | .RenderString }}</h3>
+                    {{ with .Description }}
+                      <p class="item-description">{{ . }}</p>
+                    {{ end }}
+                  </div>
+                </a>
+              </li>
+            {{ end }}
+          {{ end }}
+        </ul>
+      </section>
+    {{ end }}
   {{ else }}
     <p class="no-posts">No TILs yet. Check back soon!</p>
   {{ end }}

@@ -1,11 +1,16 @@
 {{ define "main" }}
-<article>
-  <header class="page-header">
-    <h1 class="page-title">{{ .Title }}</h1>
-  </header>
+<div class="page-single">
+  <article>
+    <header class="about-header">
+      <h1 class="page-title">{{ .Title }}</h1>
+      <div class="about-avatar">
+        <img src="{{ .Site.Params.avatar | default "/images/avatar-placeholder.svg" }}" alt="{{ .Site.Params.author }}" />
+      </div>
+    </header>
 
-  <div class="content about-content">
-    {{ .Content }}
-  </div>
-</article>
+    <div class="content about-content">
+      {{ .Content }}
+    </div>
+  </article>
+</div>
 {{ end }}

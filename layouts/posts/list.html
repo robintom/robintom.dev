@@ -1,7 +1,7 @@
 {{ define "main" }}
 <header class="page-header">
   <h1 class="page-title">Posts</h1>
-  <p class="page-description">All my writings, newest first.</p>
+  <p class="page-description">Longer writing &mdash; deep dives, projects, and lessons learned.</p>
 </header>
 
 {{/* Collect all unique tags */}}
@@ -58,8 +58,8 @@
                   {{ with .Description }}
                     <p class="item-description">{{ . }}</p>
                   {{ end }}
+                  <div class="item-meta">{{ math.Round (div (countwords .Content) 200.0) }} min read</div>
                 </div>
-                <span class="item-meta">{{ math.Round (div (countwords .Content) 200.0) }} min</span>
               </a>
             </li>
           {{ end }}
@@ -69,7 +69,7 @@
   {{ end }}
 
   {{ if not $posts }}
-    <p>No posts yet. Check back soon!</p>
+    <p class="no-posts">No posts yet. Check back soon!</p>
   {{ end }}
 
   <p class="no-results" hidden>No posts found with this tag.</p>

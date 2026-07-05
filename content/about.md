@@ -1,6 +1,7 @@
 ---
 title: "About"
 description: "A bit about me and what I do."
+type: "page"
 ---
 
 I'm Robin Tom, a developer who enjoys building things that work well.

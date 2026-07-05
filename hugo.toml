@@ -69,9 +69,9 @@ title = 'Robin Tom'
     lineNoStart = 1
     lineNos = false
     lineNumbersInTable = true
-    noClasses = true
+    noClasses = false  # Use CSS classes so code blocks follow the light/dark theme
     noHl = false
-    style = 'dracula'
+    style = 'dracula'  # Unused when noClasses=false; token colors live in style.css
     tabWidth = 4
 
 # =============================================================================
