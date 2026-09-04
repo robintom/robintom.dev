@@ -1,27 +1,32 @@
 {{ define "main" }}
+<div class="wrap page-pad">
 <div class="page-single">
-  <a href="/til/" class="back-link">All TILs</a>
-
-  <article>
+  <article class="article">
     <header class="post-header">
-      <h1 class="post-title">{{ .Title | .RenderString }}</h1>
-      <div class="page-meta">
-        <time datetime="{{ .Date.Format "2006-01-02" }}">
-          {{ .Date.Format "Jan 2, 2006" }}
-        </time>
-        {{ with .Params.tags }}
-          <div class="tags">
-            {{ range . }}
-              <a href="/tags/{{ . | urlize }}/" class="tag">{{ . }}</a>
-            {{ end }}
-          </div>
-        {{ end }}
-      </div>
+      <p class="eyebrow">
+        <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
+        {{ with .Params.tags }}&middot; {{ index . 0 }}{{ end }}
+      </p>
+
+      <h1 class="post-title post-title-til">{{ .Title | .RenderString }}</h1>
+
+      {{ with .Params.tags }}
+        <div class="tags">
+          {{ range . }}
+            <a href="/tags/{{ . | urlize }}/" class="tag">{{ . }}</a>
+          {{ end }}
+        </div>
+      {{ end }}
     </header>
 
     <div class="content">
       {{ .Content }}
     </div>
+
+    <nav class="post-nav" aria-label="Post navigation">
+      <a href="/til/" class="arrow-link arrow-link-back"><span aria-hidden="true">&larr;</span> All TILs</a>
+    </nav>
   </article>
+</div>
 </div>
 {{ end }}

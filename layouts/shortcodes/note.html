@@ -1,0 +1,5 @@
+{{/* Callout from the design: {{< note >}}body{{< /note >}}, optional label. */}}
+<aside class="note">
+  <span class="note-label">{{ .Get "label" | default (.Get 0) | default "Note" }}</span>
+  <div class="note-body">{{ .Inner | .Page.RenderString (dict "display" "block") }}</div>
+</aside>

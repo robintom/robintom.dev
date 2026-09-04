@@ -1,9 +1,4 @@
 {{ define "main" }}
-<header class="page-header">
-  <h1 class="page-title">Today I Learned</h1>
-  <p class="page-description">Short notes on small things &mdash; commands, flags, and tricks worth remembering.</p>
-</header>
-
 {{ $tils := .Pages }}
 
 {{/* Collect all unique tags */}}
@@ -16,17 +11,22 @@
   {{ end }}
 {{ end }}
 
-{{/* Tag filter section */}}
+<div class="wrap page-pad">
+<header class="page-header page-header-til">
+  <h1 class="page-title">Today I <em>learned</em></h1>
+  <p class="page-description">Short notes. One thing a day, sometimes.</p>
+</header>
+
 {{ if $allTags }}
-<div class="tag-filter">
-  <span class="tag-filter-label">Filter by tag:</span>
-  <div class="tag-filter-list">
-    <button class="tag-filter-btn active" data-tag="all">All</button>
-    {{ range sort $allTags }}
-      <button class="tag-filter-btn" data-tag="{{ . | urlize }}">{{ . }}</button>
-    {{ end }}
+  <div class="tag-filter tag-filter-inline">
+    <h2 class="eyebrow tag-filter-label">Filter</h2>
+    <div class="tag-filter-list">
+      <button class="tag-filter-btn active" type="button" data-tag="all">All</button>
+      {{ range sort $allTags }}
+        <button class="tag-filter-btn" type="button" data-tag="{{ . | urlize }}">{{ . }}</button>
+      {{ end }}
+    </div>
   </div>
-</div>
 {{ end }}
 
 <div class="filtered-content">
@@ -43,7 +43,7 @@
     {{ range $year := $years }}
       <section class="posts-year" data-year="{{ $year }}">
         <h2 class="year-heading">{{ $year }}</h2>
-        <ul class="item-list">
+        <ul class="item-list til-list">
           {{ range $tils }}
             {{ if eq (.Date.Format "2006") $year }}
               {{ $tags := slice }}
@@ -61,6 +61,9 @@
                       <p class="item-description">{{ . }}</p>
                     {{ end }}
                   </div>
+                  {{ with .Params.tags }}
+                    <span class="item-tag">{{ index . 0 }}</span>
+                  {{ end }}
                 </a>
               </li>
             {{ end }}
@@ -73,5 +76,6 @@
   {{ end }}
 
   <p class="no-results" hidden>No TILs found with this tag.</p>
+</div>
 </div>
 {{ end }}

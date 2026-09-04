@@ -1,20 +1,25 @@
 {{ define "main" }}
+<div class="wrap page-pad">
 <div class="page-single">
-  <a href="{{ .Parent.Permalink }}" class="back-link">Back</a>
-
-  <article>
+  <article class="article">
     <header class="post-header">
+      <p class="eyebrow">
+        <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
+      </p>
       <h1 class="post-title">{{ .Title }}</h1>
-      <div class="page-meta">
-        <time datetime="{{ .Date.Format "2006-01-02" }}">
-          {{ .Date.Format "Jan 2, 2006" }}
-        </time>
-      </div>
+      {{ with .Description }}
+        <p class="post-lede">{{ . }}</p>
+      {{ end }}
     </header>
 
     <div class="content">
       {{ .Content }}
     </div>
+
+    <nav class="post-nav" aria-label="Post navigation">
+      <a href="{{ .Parent.Permalink }}" class="arrow-link arrow-link-back"><span aria-hidden="true">&larr;</span> Back</a>
+    </nav>
   </article>
+</div>
 </div>
 {{ end }}

@@ -1,75 +1,89 @@
 {{ define "main" }}
-<section class="intro">
-  <div class="intro-content">
-    <h1 class="intro-greeting">Hey, I&rsquo;m Robin Tom.</h1>
-    <p class="intro-text">
-      A developer who enjoys building things and writing about the journey &mdash; thoughts on code, tools, and the occasional deep dive into interesting problems.
+{{/* `first 1` yields an empty slice when a section is empty, so guard the index. */}}
+{{ $posts := where .Site.RegularPages "Section" "posts" }}
+{{ $tils := where .Site.RegularPages "Section" "til" }}
+{{ $latestPost := cond (gt (len $posts) 0) (index $posts 0) false }}
+{{ $latestTil := cond (gt (len $tils) 0) (index $tils 0) false }}
+
+<section class="hero" data-tilt>
+  {{ partial "sky.html" (dict "small" false) }}
+
+  <div class="wrap hero-wrap">
+  <div class="hero-inner">
+    <p class="hero-eyebrow">
+      <img class="hero-avatar" src="{{ .Site.Params.avatar }}" alt="{{ .Site.Params.author }}" width="36" height="36">
+      <span>{{ .Site.Params.tagline }}</span>
+      <span class="hero-rule" aria-hidden="true"></span>
     </p>
+
+    <h1 class="hero-title">
+      <span class="hero-title-lead">Hey, I&rsquo;m</span>
+      <em class="hero-title-name">{{ .Site.Params.author }}.</em>
+    </h1>
+
+    {{ with .Site.Params.rotatingWords }}
+      <p class="hero-sub" data-rotator="{{ delimit . "|" }}">
+        <span>I build</span>
+        <span class="hero-word"><em>{{ index . 0 }}</em></span>
+        <span>&mdash; and write about the journey.</span>
+      </p>
+    {{ end }}
   </div>
-  <div class="intro-avatar">
-    <img src="{{ .Site.Params.avatar | default "/images/avatar-placeholder.svg" }}" alt="{{ .Site.Params.author }}" />
+
+  <div class="hero-latest">
+    {{ with $latestPost }}
+      <div class="hero-latest-col">
+        <h2 class="eyebrow">Latest post</h2>
+        <a href="{{ .Permalink }}" class="hero-latest-link">
+          <span class="hero-latest-title">{{ .Title }}</span>
+          <span class="hero-latest-meta">
+            {{ .Date.Format "Jan 2, 2006" }} &middot; {{ math.Round (div (countwords .Content) 200.0) }} min read
+          </span>
+        </a>
+        <a href="/posts/" class="arrow-link">All posts <span aria-hidden="true">&rarr;</span></a>
+      </div>
+    {{ end }}
+
+    {{ with $latestTil }}
+      <div class="hero-latest-col">
+        <h2 class="eyebrow">Today I learned</h2>
+        <a href="{{ .Permalink }}" class="hero-latest-link">
+          <span class="hero-latest-title">{{ .Title | $.RenderString }}</span>
+          <span class="hero-latest-meta">
+            {{ .Date.Format "Jan 2, 2006" }}{{ with .Params.tags }} &middot; {{ index . 0 }}{{ end }}
+          </span>
+        </a>
+        <a href="/til/" class="arrow-link">All TILs <span aria-hidden="true">&rarr;</span></a>
+      </div>
+    {{ end }}
   </div>
-</section>
+  </div>
 
-<section class="posts-section">
-  <h2 class="section-title">Latest posts</h2>
-
-  {{ $posts := where .Site.RegularPages "Section" "posts" }}
-  {{ $posts = $posts | first 5 }}
-
-  {{ if $posts }}
-    <ul class="item-list item-list-open">
-      {{ range $posts }}
-        <li class="item">
-          <a href="{{ .Permalink }}" class="item-link">
-            <time class="item-date" datetime="{{ .Date.Format "2006-01-02" }}">
-              {{ .Date.Format "Jan 2" }}
-            </time>
-            <div class="item-content">
-              <h3 class="item-title">{{ .Title }}</h3>
-              {{ with .Description }}
-                <p class="item-description">{{ . }}</p>
-              {{ end }}
-              <div class="item-meta">{{ math.Round (div (countwords .Content) 200.0) }} min read</div>
-            </div>
-          </a>
-        </li>
+  {{/* Closing band: gives the page an ending and fills the space between the
+       latest row and the footer. Sits inside .hero so the sky, and therefore
+       the haze, still runs behind it down to the footer rule. */}}
+  <div class="wrap closing">
+    <div class="closing-note">
+      {{ with .Site.Params.closingHeadline }}
+        <p class="closing-title">{{ . | markdownify }}</p>
       {{ end }}
-    </ul>
-
-    <a href="/posts/" class="view-all">View all posts</a>
-  {{ else }}
-    <p class="no-posts">No posts yet. Check back soon!</p>
-  {{ end }}
-</section>
-
-<section class="til-section">
-  <h2 class="section-title">Today I learned</h2>
-
-  {{ $tils := where .Site.RegularPages "Section" "til" }}
-  {{ $tils = $tils | first 3 }}
-
-  {{ if $tils }}
-    <ul class="item-list item-list-open">
-      {{ range $tils }}
-        <li class="item item-compact">
-          <a href="{{ .Permalink }}" class="item-link">
-            <time class="item-date" datetime="{{ .Date.Format "2006-01-02" }}">
-              {{ .Date.Format "Jan 2" }}
-            </time>
-            <div class="item-content">
-              <h3 class="item-title">{{ .Title | .RenderString }}</h3>
-            </div>
-          </a>
-        </li>
+      {{ with .Site.Params.closingText }}
+        <p class="closing-text">{{ . }}</p>
       {{ end }}
-    </ul>
-
-    <div class="section-footer">
-      <a href="/til/" class="view-all">View all TILs</a>
     </div>
-  {{ else }}
-    <p class="no-posts">No TILs yet. Check back soon!</p>
-  {{ end }}
+
+    <div class="closing-links">
+      <h2 class="eyebrow">Elsewhere</h2>
+      <div class="closing-pills">
+        {{ with .Site.Params.github }}
+          <a href="{{ . }}" class="pill" target="_blank" rel="noopener">GitHub <span aria-hidden="true">&#8599;</span></a>
+        {{ end }}
+        {{ with .Site.Params.email }}
+          <a href="mailto:{{ . }}" class="pill">Email</a>
+        {{ end }}
+        <a href="/index.xml" class="pill">RSS</a>
+      </div>
+    </div>
+  </div>
 </section>
 {{ end }}

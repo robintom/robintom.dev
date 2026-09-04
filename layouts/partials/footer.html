@@ -1,6 +1,8 @@
 <footer class="footer">
   <div class="footer-content">
-    <span>&copy; {{ now.Year }} {{ .Site.Params.author }}</span>
+    <span class="footer-colophon">
+      {{ with .Site.Params.colophon }}{{ . }} &middot; {{ end }}&copy; {{ now.Year }} {{ .Site.Params.author }}
+    </span>
     <div class="footer-links">
       {{ with .Site.Params.github }}
       <a href="{{ . }}" target="_blank" rel="noopener">GitHub</a>

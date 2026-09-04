@@ -1,16 +1,26 @@
 {{ define "main" }}
-<div class="page-single">
-  <article>
-    <header class="about-header">
-      <h1 class="page-title">{{ .Title }}</h1>
-      <div class="about-avatar">
-        <img src="{{ .Site.Params.avatar | default "/images/avatar-placeholder.svg" }}" alt="{{ .Site.Params.author }}" />
-      </div>
-    </header>
+{{/* Full-bleed section so the sky spans the window; content stays in .wrap. */}}
+<section class="page-about">
+  {{ partial "sky.html" (dict "small" true) }}
 
-    <div class="content about-content">
-      {{ .Content }}
-    </div>
-  </article>
-</div>
+  <div class="wrap page-pad">
+    <article class="about-inner">
+      <img class="about-avatar" src="{{ .Site.Params.avatar }}" alt="{{ .Site.Params.author }}" width="96" height="96">
+
+      <div class="content about-content">
+        {{ .Content }}
+      </div>
+
+      <div class="about-links">
+        {{ with .Site.Params.github }}
+          <a href="{{ . }}" class="pill" target="_blank" rel="noopener">GitHub <span aria-hidden="true">&#8599;</span></a>
+        {{ end }}
+        {{ with .Site.Params.email }}
+          <a href="mailto:{{ . }}" class="pill">Email</a>
+        {{ end }}
+        <a href="/index.xml" class="pill">RSS</a>
+      </div>
+    </article>
+  </div>
+</section>
 {{ end }}

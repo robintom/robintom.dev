@@ -20,11 +20,31 @@ title = 'Robin Tom'
   author = "Robin Tom"
   avatar = "/images/profile.jpg"
 
-  # Social links (used in footer)
+  # Social links (used in footer and the About page)
   github = "https://github.com/robintom"
   twitter = ""
   linkedin = ""
-  email = ""
+  # Set this and the About page's third pill ("Email") appears automatically.
+  email = "hi@robintom.dev"
+
+  # Hero eyebrow, shown next to the avatar on the home page
+  tagline = "Developer \u00b7 writes about the journey"
+
+  # Words cycled through in the home hero: "I build <word> \u2014 and write about the journey."
+  rotatingWords = [
+    "small experiments",
+    "things that work",
+    "bugs I later blog about",
+    "side projects I swear I\u2019ll finish",
+  ]
+
+  # Colophon line in the footer
+  colophon = "Built with Hugo \u00b7 Cloudflare Pages"
+
+  # Closing band on the home page. Markdown emphasis in the headline renders as
+  # the ember italic. Clear closingHeadline to drop the band entirely.
+  closingHeadline = "I enjoy building things that *work well.*"
+  closingText = "Systems programming, web development, and understanding how things work under the hood."
 
 # =============================================================================
 # Permalinks

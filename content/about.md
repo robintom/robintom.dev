@@ -4,9 +4,9 @@ description: "A bit about me and what I do."
 type: "page"
 ---
 
-I'm Robin Tom, a developer who enjoys building things that work well.
+I enjoy building things that *work well.*
 
-I'm particularly interested in systems programming, web development, and understanding how things work under the hood. When I'm not writing code, I'm probably reading about it or exploring new technologies.
+Particularly interested in systems programming, web development, and understanding how things work under the hood. When I'm not writing code, I'm probably reading about it or exploring new technologies.
 
 This blog is where I share what I learn — deep dives into interesting problems, tutorials, and occasional thoughts on the craft of software development.
 

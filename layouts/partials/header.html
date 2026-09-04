@@ -1,16 +1,23 @@
 <header class="header">
-  <nav class="nav">
+  <nav class="nav" aria-label="Primary">
     <a href="/" class="nav-logo">{{ .Site.Title }}</a>
 
-    <div class="nav-links">
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+
+    <div class="nav-links" id="nav-links">
       <a href="/" class="nav-link{{ if .IsHome }} active{{ end }}">Home</a>
       <a href="/posts/" class="nav-link{{ if eq .Section "posts" }} active{{ end }}">Posts</a>
       <a href="/til/" class="nav-link{{ if eq .Section "til" }} active{{ end }}">TIL</a>
       <a href="/about/" class="nav-link{{ if eq .Title "About" }} active{{ end }}">About</a>
 
-      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle theme">
-        <span class="icon-sun">&#9728;</span>
-        <span class="icon-moon">&#9790;</span>
+      <span class="nav-divider" aria-hidden="true"></span>
+
+      <button class="theme-toggle" type="button" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle theme">
+        <span class="icon-sun" aria-hidden="true">&#9728;</span>
+        <span class="icon-moon" aria-hidden="true">&#9790;</span>
       </button>
     </div>
   </nav>

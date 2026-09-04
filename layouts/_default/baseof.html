@@ -4,6 +4,9 @@
   {{- partial "head.html" . -}}
 </head>
 <body>
+  {{/* Film grain sits over the whole page, as it does on every artboard. */}}
+  <div class="grain" aria-hidden="true"></div>
+
   {{- partial "header.html" . -}}
 
   <main class="main">
@@ -14,5 +17,6 @@
 
   <script src="/js/theme.js"></script>
   <script src="/js/tag-filter.js"></script>
+  <script src="/js/site.js"></script>
 </body>
 </html>

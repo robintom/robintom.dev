@@ -24,6 +24,10 @@
   {{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }}
 {{ end -}}
 
+{{/* Browser chrome colour matches the paper / ink ground */}}
+<meta name="theme-color" content="#F6F1E8" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#15120F" media="(prefers-color-scheme: dark)">
+
 {{/* Favicon - you can add your own later */}}
 <link rel="icon" href="/favicon.ico" type="image/x-icon">
 
@@ -31,8 +35,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-{{/* Google Fonts - Newsreader for body/headings, Public Sans for UI, JetBrains Mono for code */}}
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+{{/* Google Fonts - Instrument Serif for display, Newsreader for body, JetBrains Mono for UI/code */}}
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 {{/* Main stylesheet */}}
 <link rel="stylesheet" href="/css/style.css">

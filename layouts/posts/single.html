@@ -1,30 +1,49 @@
 {{ define "main" }}
-<div class="page-single">
-  <a href="/posts/" class="back-link">All posts</a>
+{{ $readTime := math.Round (div (countwords .Content) 200.0) }}
 
-  <article>
+<div class="reading-progress" aria-hidden="true"><span></span></div>
+
+<div class="wrap page-pad article-layout">
+  <aside class="toc" data-toc>
+    <h2 class="eyebrow toc-title">Contents</h2>
+    {{ .TableOfContents }}
+    <p class="toc-progress" data-read-time="{{ $readTime }}">
+      <span data-progress-percent>0%</span> read &middot; <span data-progress-left>{{ $readTime }}</span> min left
+    </p>
+  </aside>
+
+  <article class="article">
     <header class="post-header">
-      <h1 class="post-title">{{ .Title }}</h1>
-      <div class="page-meta">
-        <time datetime="{{ .Date.Format "2006-01-02" }}">
-          {{ .Date.Format "Jan 2, 2006" }}
-        </time>
-        <span>&middot;</span>
-        <span>{{ math.Round (div (countwords .Content) 200.0) }} min read</span>
+      <p class="eyebrow">
+        <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
+        &middot; {{ $readTime }} min read
+      </p>
 
-        {{ with .Params.tags }}
-          <div class="tags">
-            {{ range . }}
-              <a href="/tags/{{ . | urlize }}/" class="tag">{{ . }}</a>
-            {{ end }}
-          </div>
-        {{ end }}
-      </div>
+      <h1 class="post-title">{{ .Title }}</h1>
+
+      {{ with .Description }}
+        <p class="post-lede">{{ . }}</p>
+      {{ end }}
+
+      {{ with .Params.tags }}
+        <div class="tags">
+          {{ range . }}
+            <a href="/tags/{{ . | urlize }}/" class="tag">{{ . }}</a>
+          {{ end }}
+        </div>
+      {{ end }}
     </header>
 
-    <div class="content">
+    <div class="content content-dropcap">
       {{ .Content }}
     </div>
+
+    <nav class="post-nav" aria-label="Post navigation">
+      <a href="/posts/" class="arrow-link arrow-link-back"><span aria-hidden="true">&larr;</span> All posts</a>
+      {{ with .NextInSection }}
+        <a href="{{ .Permalink }}" class="arrow-link">{{ .Title }} <span aria-hidden="true">&rarr;</span></a>
+      {{ end }}
+    </nav>
   </article>
 </div>
 {{ end }}
